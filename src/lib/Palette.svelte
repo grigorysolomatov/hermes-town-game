@@ -74,12 +74,27 @@
 
   .items {
     display: flex;
+    flex-wrap: nowrap;
     gap: 12px;
     padding: 6px 16px 18px;
     overflow-x: auto;
+    overflow-y: hidden;
     max-height: 160px;
     opacity: 1;
+    /* Let the browser pan horizontally; vertical pulls become building drags. */
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
     transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
+  }
+  .items::-webkit-scrollbar {
+    height: 6px;
+  }
+  .items::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 3px;
   }
   .palette.collapsed .items {
     max-height: 0;
@@ -99,7 +114,11 @@
     color: var(--muted);
     font: inherit;
     cursor: grab;
-    touch-action: none;
+    /* Horizontal swipe on an item scrolls the panel; vertical pull drags it. */
+    touch-action: pan-x;
+  }
+  .item .name {
+    white-space: nowrap;
   }
   .item .tile {
     width: 64px;

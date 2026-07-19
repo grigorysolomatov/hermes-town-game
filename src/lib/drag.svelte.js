@@ -31,7 +31,10 @@ export function canDropAt(index) {
 
 export function startDrag(e, type, from) {
   if (drag.pending) return;
-  e.preventDefault();
+  // Grid pieces take over immediately (they live outside any scroll area).
+  // Palette items defer: a horizontal swipe should scroll the panel instead,
+  // so we only claim the gesture once it proves to be a vertical pull.
+  if (from.source === 'grid') e.preventDefault();
   drag.pending = true;
   drag.active = false;
   drag.type = type;
@@ -47,10 +50,22 @@ export function startDrag(e, type, from) {
 function onMove(e) {
   drag.x = e.clientX;
   drag.y = e.clientY;
+
   if (!drag.active) {
-    if (Math.hypot(e.clientX - drag.startX, e.clientY - drag.startY) < THRESHOLD) return;
+    const dx = e.clientX - drag.startX;
+    const dy = e.clientY - drag.startY;
+    if (Math.hypot(dx, dy) < THRESHOLD) return;
+    // From the palette, a mostly-horizontal move is a scroll gesture: bow out
+    // and let the browser pan the panel (touch-action: pan-x handles it).
+    if (drag.from?.source === 'palette' && Math.abs(dx) > Math.abs(dy)) {
+      cleanup();
+      return;
+    }
     drag.active = true;
   }
+
+  // Prevent the page/panel from scrolling while an actual drag is in progress.
+  e.preventDefault();
   drag.overIndex = cellAt(e.clientX, e.clientY);
 }
 
