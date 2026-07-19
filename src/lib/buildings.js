@@ -8,7 +8,8 @@ export const BUILDINGS = {
   sawmill: { id: 'sawmill', name: 'Sawmill', emoji: '🪚', image: null, tint: '#c98a4b', produces: 'wood' },
   mine:    { id: 'mine',    name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
   lab:     { id: 'lab',     name: 'Lab',     emoji: '🔬', image: null, tint: '#38bdf8', produces: 'science' },
+  pharma:  { id: 'pharma',  name: 'Pharma',  emoji: '🏥', image: null, tint: '#f472b6', produces: 'medicine' },
 };
 
 // Order shown in the palette.
-export const PALETTE = ['house', 'farm', 'sawmill', 'mine', 'lab'];
+export const PALETTE = ['house', 'farm', 'sawmill', 'mine', 'lab', 'pharma'];
