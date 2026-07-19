@@ -28,10 +28,14 @@
     letter-spacing: 0.03em;
     font-size: 0.98rem;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
   }
   .resources {
     margin-left: auto;
     display: flex;
     gap: 8px;
+    flex: 0 0 auto;
   }
 </style>
