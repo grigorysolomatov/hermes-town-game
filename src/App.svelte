@@ -1,18 +1,26 @@
 <script>
+  import { onMount } from 'svelte';
   import Grid from './lib/Grid.svelte';
   import Palette from './lib/Palette.svelte';
   import DragLayer from './lib/DragLayer.svelte';
+  import ResourceBar from './lib/ResourceBar.svelte';
+  import TimeControls from './lib/TimeControls.svelte';
+  import { startLoop, stopLoop } from './lib/loop.svelte.js';
+
+  onMount(() => {
+    startLoop();
+    return stopLoop;
+  });
 </script>
 
 <main class="stage">
-  <header class="topbar">
-    <span class="logo">🏛️ Hermes Town</span>
-  </header>
+  <ResourceBar />
 
   <section class="board-area">
     <Grid />
   </section>
 
+  <TimeControls />
   <Palette />
 
   <DragLayer />
@@ -22,19 +30,6 @@
   .stage {
     display: flex;
     flex-direction: column;
-  }
-  .topbar {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .logo {
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    font-size: 1.05rem;
   }
   .board-area {
     flex: 1 1 auto;

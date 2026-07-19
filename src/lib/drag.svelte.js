@@ -1,3 +1,4 @@
+import { tick } from 'svelte';
 import { game, newUid } from './game.svelte.js';
 
 // Custom pointer-based drag (works for both touch and mouse, unlike the native
@@ -56,6 +57,11 @@ function onMove(e) {
 function onUp(e) {
   if (drag.active) resolveDrop(cellAt(e.clientX, e.clientY));
   cleanup();
+  // Clear the skip-FLIP flag once the DOM has settled, so future moves of the
+  // same piece (e.g. when swapped by another drag) animate normally again.
+  tick().then(() => {
+    game.justMoved = null;
+  });
 }
 
 function resolveDrop(target) {
@@ -71,6 +77,8 @@ function resolveDrop(target) {
   if (target == null || target === src) return;
   const moving = game.grid[src];
   const occupant = game.grid[target];
+  // The ghost already animated the dragged piece's motion, so don't FLIP it too.
+  game.justMoved = moving.uid;
   game.grid[target] = moving;
   game.grid[src] = occupant ?? null;
 }

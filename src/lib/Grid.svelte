@@ -42,7 +42,7 @@
         aria-label={BUILDINGS[p.type].name}
         class:hidden={isBeingDragged(p.index)}
         style="left:{(p.index % 5) * 20}%; top:{Math.floor(p.index / 5) * 20}%; --tint:{BUILDINGS[p.type].tint}"
-        animate:flip={{ duration: 240 }}
+        animate:flip={{ duration: p.uid === game.justMoved ? 0 : 240 }}
         in:scale={{ duration: 220, start: 0.4 }}
         out:scale={{ duration: 150 }}
         onpointerdown={(e) => startDrag(e, p.type, { source: 'grid', index: p.index })}
