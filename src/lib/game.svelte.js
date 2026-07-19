@@ -2,7 +2,7 @@
 // Each cell is either null or a placed building: { uid, type }.
 export const game = $state({
   grid: Array(25).fill(null),
-  resources: { food: 0 },
+  resources: { food: 0, stone: 0 },
   speed: 1,          // time scale: 0 paused, 1 normal, 3 fast
   justMoved: null,   // uid to skip FLIP for (its motion was already shown by the drag ghost)
 });

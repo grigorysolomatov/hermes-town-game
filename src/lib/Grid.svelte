@@ -47,7 +47,7 @@
         out:scale={{ duration: 150 }}
         onpointerdown={(e) => startDrag(e, p.type, { source: 'grid', index: p.index })}
       >
-        <div class="tile"><BuildingIcon type={p.type} /></div>
+        <div class="tile" data-uid={p.uid}><BuildingIcon type={p.type} /></div>
       </div>
     {/each}
   </div>
