@@ -78,11 +78,13 @@
               <span class="ricon">{badge.icon}</span>{stored}
             </div>
           {/if}
-
-          {#if badge && flashing}
-            <div class="plus" style="--rtint:{badge.tint}">{badge.delta}</div>
-          {/if}
         </div>
+
+        <!-- Float lives outside .tile so a just-spent coffee's dimming doesn't
+             also fade its own −1. -->
+        {#if badge && flashing}
+          <div class="plus" style="--rtint:{badge.tint}">{badge.delta}</div>
+        {/if}
       </div>
     {/each}
   </div>
@@ -150,6 +152,7 @@
     position: absolute;
     width: var(--cell);
     height: var(--cell);
+    container-type: size; /* lets the .plus float size itself via cqmin */
     will-change: transform;
   }
   .piece.hidden {

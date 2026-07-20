@@ -20,8 +20,8 @@
     filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
   }
   img {
-    width: 72%;
-    height: 72%;
+    width: 94%;
+    height: 94%;
     object-fit: contain;
     filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
   }

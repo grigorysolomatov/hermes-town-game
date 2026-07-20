@@ -1,4 +1,5 @@
 import coffeeShopImg from './assets/coffee-shop.png';
+import sawmillImg from './assets/sawmill.png';
 
 // Building catalogue. The map key is the building's id.
 //   emoji       shown on the tile (see BuildingIcon)
@@ -9,7 +10,7 @@ import coffeeShopImg from './assets/coffee-shop.png';
 //   startStored initial (and per-turn recharge) charge count for `special` tiles
 export const BUILDINGS = {
   farm:    { name: 'Farm',    emoji: '🌾', image: null, tint: '#fbbf24', produces: 'food' },
-  sawmill: { name: 'Sawmill', emoji: '🪚', image: null, tint: '#c98a4b', produces: 'wood' },
+  sawmill: { name: 'Sawmill', emoji: '🪚', image: sawmillImg, tint: '#c98a4b', produces: 'wood' },
   mine:    { name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
   lab:     { name: 'Lab',     emoji: '🔬', image: null, tint: '#38bdf8', produces: 'science' },
   pharma:  { name: 'Pharma',  emoji: '🏥', image: null, tint: '#f472b6', produces: 'medicine' },
