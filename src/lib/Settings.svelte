@@ -48,8 +48,12 @@
 {/if}
 
 <style>
+  /* Floats in the top-right of the stage, just below the resource bar. */
   .gear {
-    flex: 0 0 auto;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    z-index: 25;
     width: 34px;
     height: 34px;
     display: grid;
@@ -57,6 +61,7 @@
     border-radius: 9px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
     font-size: 1.05rem;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.2s ease;

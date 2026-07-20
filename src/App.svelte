@@ -5,10 +5,12 @@
   import FlyLayer from './lib/FlyLayer.svelte';
   import ResourceBar from './lib/ResourceBar.svelte';
   import RunControls from './lib/RunControls.svelte';
+  import Settings from './lib/Settings.svelte';
 </script>
 
 <main class="stage">
   <ResourceBar />
+  <Settings />
 
   <section class="board-area">
     <Grid />

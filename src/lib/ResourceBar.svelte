@@ -2,7 +2,6 @@
   import { game } from './game.svelte.js';
   import { RESOURCE_ORDER } from './resources.js';
   import ResourceChip from './ResourceChip.svelte';
-  import Settings from './Settings.svelte';
 </script>
 
 <header class="topbar">
@@ -12,7 +11,6 @@
       <ResourceChip rkey={key} amount={game.resources[key] ?? 0} />
     {/each}
   </div>
-  <Settings />
 </header>
 
 <style>
