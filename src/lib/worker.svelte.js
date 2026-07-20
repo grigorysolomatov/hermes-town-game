@@ -31,6 +31,7 @@ export const worker = $state({
   turn: 0,
   speed: 'normal',
   flashing: [],     // uids of buildings mid-trigger-pulse
+  exhausted: [],    // uids that already produced this turn (grayed until next run)
 });
 
 export const stepMs = () => SPEEDS.find((s) => s.name === worker.speed).ms;
@@ -46,6 +47,7 @@ export function startRun() {
   if (worker.running) return;
   worker.running = true;
   worker.turn += 1;
+  worker.exhausted = []; // new turn restores every building
 
   let i = 0;
   const step = () => {
@@ -63,9 +65,11 @@ export function startRun() {
         game.grid[cell] = null;
         const row = Math.floor(cell / N);
         if (row > 0) next = PATH.indexOf(cell - N); // resume the sweep from above
-      } else if (def.produces) {
-        flash(b.uid);           // pulse the tile
+      } else if (def.produces && !worker.exhausted.includes(b.uid)) {
+        // Each building produces at most once per turn; then it's spent.
+        flash(b.uid);              // pulse the tile
         emit(b.uid, def.produces); // fly one unit of its resource to the counter
+        worker.exhausted.push(b.uid);
       }
     }
 

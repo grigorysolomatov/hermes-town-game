@@ -48,7 +48,12 @@
         out:scale={{ duration: 150 }}
         onpointerdown={(e) => startDrag(e, p.type, { source: 'grid', index: p.index })}
       >
-        <div class="tile" data-uid={p.uid} class:triggered={worker.flashing.includes(p.uid)}>
+        <div
+          class="tile"
+          data-uid={p.uid}
+          class:triggered={worker.flashing.includes(p.uid)}
+          class:exhausted={worker.exhausted.includes(p.uid)}
+        >
           <BuildingIcon type={p.type} />
         </div>
       </div>
@@ -141,11 +146,18 @@
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
       inset 0 0 0 1px color-mix(in srgb, var(--tint) 30%, transparent),
       0 6px 14px rgba(0, 0, 0, 0.35);
-    transition: box-shadow 0.15s ease, transform 0.12s ease;
+    transition: box-shadow 0.15s ease, transform 0.12s ease, filter 0.3s ease,
+      opacity 0.3s ease;
   }
   .tile:active {
     cursor: grabbing;
     transform: scale(0.96);
+  }
+
+  /* Spent this turn: grayed out until the next run restores it. */
+  .tile.exhausted {
+    filter: grayscale(0.85) brightness(0.6);
+    opacity: 0.5;
   }
 
   /* Building fires when the worker steps onto it. */

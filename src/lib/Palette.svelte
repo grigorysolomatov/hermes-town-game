@@ -13,17 +13,19 @@
     <span class="chev" class:up={collapsed}>⌄</span>
   </button>
 
-  <div class="items">
-    {#each PALETTE as id}
-      <button
-        class="item"
-        style="--tint:{BUILDINGS[id].tint}"
-        onpointerdown={(e) => startDrag(e, id, { source: 'palette' })}
-      >
-        <div class="tile"><BuildingIcon type={id} /></div>
-        <span class="name">{BUILDINGS[id].name}</span>
-      </button>
-    {/each}
+  <div class="items-wrap">
+    <div class="items">
+      {#each PALETTE as id}
+        <button
+          class="item"
+          style="--tint:{BUILDINGS[id].tint}"
+          onpointerdown={(e) => startDrag(e, id, { source: 'palette' })}
+        >
+          <div class="tile"><BuildingIcon type={id} /></div>
+          <span class="name">{BUILDINGS[id].name}</span>
+        </button>
+      {/each}
+    </div>
   </div>
 </div>
 
@@ -70,6 +72,25 @@
   }
   .chev.up {
     transform: rotate(180deg);
+  }
+
+  /* Fade the right edge to hint that the row scrolls to more buildings. */
+  .items-wrap {
+    position: relative;
+  }
+  .items-wrap::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 32px;
+    pointer-events: none;
+    background: linear-gradient(to right, rgba(15, 13, 28, 0), rgba(15, 13, 28, 0.85));
+    transition: opacity 0.25s ease;
+  }
+  .palette.collapsed .items-wrap::after {
+    opacity: 0;
   }
 
   .items {
