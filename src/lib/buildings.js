@@ -1,3 +1,5 @@
+import coffeeShopImg from './assets/coffee-shop.png';
+
 // Building catalogue. The map key is the building's id.
 //   emoji       shown on the tile (see BuildingIcon)
 //   image       null = use the emoji; set a URL/import to use real art instead
@@ -11,7 +13,7 @@ export const BUILDINGS = {
   mine:    { name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
   lab:     { name: 'Lab',     emoji: '🔬', image: null, tint: '#38bdf8', produces: 'science' },
   pharma:  { name: 'Pharma',  emoji: '🏥', image: null, tint: '#f472b6', produces: 'medicine' },
-  coffee:  { name: 'Coffee',  emoji: '☕', image: null, tint: '#b08968', produces: null, special: 'lift', startStored: 1 },
+  coffee:  { name: 'Coffee Shop', emoji: '☕', image: coffeeShopImg, tint: '#b08968', produces: null, special: 'lift', startStored: 1 },
 };
 
 // Order shown in the palette.
