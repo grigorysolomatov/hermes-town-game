@@ -30,7 +30,6 @@ export const worker = $state({
   turn: 0,
   speed: 'normal',
   flashing: [],     // uids of buildings mid-trigger-pulse
-  exhausted: [],    // uids of coffee tiles already used this turn (grayed until next run)
 });
 
 export const stepMs = () => SPEEDS.find((s) => s.name === worker.speed).ms;
@@ -46,7 +45,13 @@ export function startRun() {
   if (worker.running) return;
   worker.running = true;
   worker.turn += 1;
-  worker.exhausted = []; // new turn restores every used coffee
+
+  // Recharge single-charge tiles (coffee) at the start of each turn.
+  for (const cell of game.grid) {
+    if (cell && BUILDINGS[cell.type].special === 'lift') {
+      cell.stored = BUILDINGS[cell.type].startStored ?? 1;
+    }
+  }
 
   let i = 0;
   const step = () => {
@@ -59,16 +64,15 @@ export function startRun() {
     if (b) {
       const def = BUILDINGS[b.type];
       if (def.special === 'lift') {
-        // Coffee: fires once per turn. Activating it exhausts it (grays out) so
-        // the worker can't re-trigger it and loop forever. It lifts the worker
-        // up one row, letting the producers below get swept again.
-        if (!worker.exhausted.includes(b.uid)) {
-          worker.exhausted.push(b.uid);
+        // Coffee: each activation spends one charge and lifts the worker up one
+        // row (re-sweeping the producers below). At 0 charges it's inert, so the
+        // run can't loop forever.
+        if ((b.stored ?? 0) > 0) {
+          b.stored -= 1;
           flash(b.uid);
           const row = Math.floor(cell / N);
           if (row > 0) next = PATH.indexOf(cell - N); // resume the sweep from above
         }
-        // A spent coffee is inert for the rest of the turn.
       } else if (def.produces) {
         // Producers fire every time the worker hits them (coffee can combo them).
         // The produced unit is stored on the tile itself.

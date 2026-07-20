@@ -9,7 +9,7 @@ export const BUILDINGS = {
   mine:    { id: 'mine',    name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
   lab:     { id: 'lab',     name: 'Lab',     emoji: '🔬', image: null, tint: '#38bdf8', produces: 'science' },
   pharma:  { id: 'pharma',  name: 'Pharma',  emoji: '🏥', image: null, tint: '#f472b6', produces: 'medicine' },
-  coffee:  { id: 'coffee',  name: 'Coffee',  emoji: '☕', image: null, tint: '#b08968', produces: null, special: 'lift' },
+  coffee:  { id: 'coffee',  name: 'Coffee',  emoji: '☕', image: null, tint: '#b08968', produces: null, special: 'lift', startStored: 1 },
 };
 
 // Order shown in the palette.

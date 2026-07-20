@@ -55,13 +55,17 @@
           class="tile"
           data-uid={p.uid}
           class:triggered={worker.flashing.includes(p.uid)}
-          class:exhausted={worker.exhausted.includes(p.uid)}
+          class:exhausted={def.special === 'lift' && (p.stored ?? 0) === 0}
         >
           <BuildingIcon type={p.type} />
 
           {#if res && (p.stored ?? 0) > 0}
             <div class="badge" style="--rtint:{res.tint}" class:bump={worker.flashing.includes(p.uid)}>
               <span class="ricon">{res.icon}</span>{p.stored}
+            </div>
+          {:else if def.special === 'lift'}
+            <div class="badge" style="--rtint:{def.tint}" class:bump={worker.flashing.includes(p.uid)}>
+              <span class="ricon">{def.emoji}</span>{p.stored ?? 0}
             </div>
           {/if}
 
