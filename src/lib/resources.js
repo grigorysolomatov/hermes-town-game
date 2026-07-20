@@ -5,7 +5,6 @@ export const RESOURCES = {
   wood:     { icon: '🪵', name: 'Wood',     tint: '#c98a4b' },
   stone:    { icon: '🪨', name: 'Stone',    tint: '#cbd5e1' },
   coal:     { icon: '⚫', name: 'Coal',     tint: '#6b7280' },
-  gems:     { icon: '💎', name: 'Gems',     tint: '#60a5fa' },
   science:  { icon: '🧪', name: 'Science',  tint: '#38bdf8' },
   medicine: { icon: '💊', name: 'Medicine', tint: '#f472b6' },
 };
