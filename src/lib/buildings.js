@@ -1,7 +1,8 @@
 // Building catalogue. `image` is null for now (emoji fallback), but the
 // rendering path already supports images so real art can be dropped in later
 // by setting `image` to a URL/imported asset. `produces` names the resource
-// this building outputs (one unit per second at normal speed), or null.
+// this building outputs when the worker triggers it, or null. `special` names
+// a non-production effect the worker applies instead (see worker.svelte.js).
 export const BUILDINGS = {
   house:   { id: 'house',   name: 'House',   emoji: '🏠', image: null, tint: '#5eead4', produces: null },
   farm:    { id: 'farm',    name: 'Farm',    emoji: '🌾', image: null, tint: '#fbbf24', produces: 'food' },
@@ -9,7 +10,8 @@ export const BUILDINGS = {
   mine:    { id: 'mine',    name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
   lab:     { id: 'lab',     name: 'Lab',     emoji: '🔬', image: null, tint: '#38bdf8', produces: 'science' },
   pharma:  { id: 'pharma',  name: 'Pharma',  emoji: '🏥', image: null, tint: '#f472b6', produces: 'medicine' },
+  coffee:  { id: 'coffee',  name: 'Coffee',  emoji: '☕', image: null, tint: '#b08968', produces: null, special: 'lift' },
 };
 
 // Order shown in the palette.
-export const PALETTE = ['house', 'farm', 'sawmill', 'mine', 'lab', 'pharma'];
+export const PALETTE = ['house', 'farm', 'sawmill', 'mine', 'lab', 'pharma', 'coffee'];

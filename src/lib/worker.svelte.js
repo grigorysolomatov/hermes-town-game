@@ -52,16 +52,24 @@ export function startRun() {
     const cell = PATH[i];
     worker.index = cell;
 
+    let next = i + 1;
+
     const b = game.grid[cell];
     if (b) {
-      const res = BUILDINGS[b.type].produces;
-      if (res) {
-        flash(b.uid);       // pulse the tile
-        emit(b.uid, res);   // fly one unit of its resource to the counter
+      const def = BUILDINGS[b.type];
+      if (def.special === 'lift') {
+        // Coffee: bump the worker up one row (same column), then vanish. It's
+        // consumed on use, so a run can't loop forever.
+        game.grid[cell] = null;
+        const row = Math.floor(cell / N);
+        if (row > 0) next = PATH.indexOf(cell - N); // resume the sweep from above
+      } else if (def.produces) {
+        flash(b.uid);           // pulse the tile
+        emit(b.uid, def.produces); // fly one unit of its resource to the counter
       }
     }
 
-    i++;
+    i = next;
     timer = setTimeout(i < PATH.length ? step : endRun, stepMs());
   };
   step();
