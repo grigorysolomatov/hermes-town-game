@@ -154,7 +154,7 @@
     transform: scale(0.96);
   }
 
-  /* Spent this turn: grayed out until the next run restores it. */
+  /* Spent coffee: grayed out until the next run restores it. */
   .tile.exhausted {
     filter: grayscale(0.85) brightness(0.6);
     opacity: 0.5;

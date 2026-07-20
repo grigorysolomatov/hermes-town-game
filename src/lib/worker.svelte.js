@@ -31,7 +31,7 @@ export const worker = $state({
   turn: 0,
   speed: 'normal',
   flashing: [],     // uids of buildings mid-trigger-pulse
-  exhausted: [],    // uids that already produced this turn (grayed until next run)
+  exhausted: [],    // uids of coffee tiles already used this turn (grayed until next run)
 });
 
 export const stepMs = () => SPEEDS.find((s) => s.name === worker.speed).ms;
@@ -47,7 +47,7 @@ export function startRun() {
   if (worker.running) return;
   worker.running = true;
   worker.turn += 1;
-  worker.exhausted = []; // new turn restores every building
+  worker.exhausted = []; // new turn restores every used coffee
 
   let i = 0;
   const step = () => {
@@ -60,16 +60,20 @@ export function startRun() {
     if (b) {
       const def = BUILDINGS[b.type];
       if (def.special === 'lift') {
-        // Coffee: bump the worker up one row (same column), then vanish. It's
-        // consumed on use, so a run can't loop forever.
-        game.grid[cell] = null;
-        const row = Math.floor(cell / N);
-        if (row > 0) next = PATH.indexOf(cell - N); // resume the sweep from above
-      } else if (def.produces && !worker.exhausted.includes(b.uid)) {
-        // Each building produces at most once per turn; then it's spent.
+        // Coffee: fires once per turn. Activating it exhausts it (grays out) so
+        // the worker can't re-trigger it and loop forever. It lifts the worker
+        // up one row, letting the producers below get swept again.
+        if (!worker.exhausted.includes(b.uid)) {
+          worker.exhausted.push(b.uid);
+          flash(b.uid);
+          const row = Math.floor(cell / N);
+          if (row > 0) next = PATH.indexOf(cell - N); // resume the sweep from above
+        }
+        // A spent coffee is inert for the rest of the turn.
+      } else if (def.produces) {
+        // Producers fire every time the worker hits them (coffee can combo them).
         flash(b.uid);              // pulse the tile
         emit(b.uid, def.produces); // fly one unit of its resource to the counter
-        worker.exhausted.push(b.uid);
       }
     }
 
