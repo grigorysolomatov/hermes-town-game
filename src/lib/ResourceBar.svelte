@@ -5,7 +5,7 @@
 </script>
 
 <header class="topbar">
-  <span class="logo">🏛️ Hermes Town</span>
+  <span class="logo">Hermes Town</span>
   <div class="resources">
     {#each RESOURCE_ORDER as key (key)}
       <ResourceChip rkey={key} amount={game.resources[key] ?? 0} />
