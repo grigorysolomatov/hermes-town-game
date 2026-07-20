@@ -1,5 +1,4 @@
 import { game } from './game.svelte.js';
-import { emit } from './flights.svelte.js';
 import { BUILDINGS } from './buildings.js';
 
 const N = 5;
@@ -72,8 +71,9 @@ export function startRun() {
         // A spent coffee is inert for the rest of the turn.
       } else if (def.produces) {
         // Producers fire every time the worker hits them (coffee can combo them).
-        flash(b.uid);              // pulse the tile
-        emit(b.uid, def.produces); // fly one unit of its resource to the counter
+        // The produced unit is stored on the tile itself.
+        flash(b.uid);                  // pulse the tile + badge
+        b.stored = (b.stored ?? 0) + 1;
       }
     }
 

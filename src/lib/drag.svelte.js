@@ -83,7 +83,7 @@ function resolveDrop(target) {
   const { from, type } = drag;
   if (from.source === 'palette') {
     if (target != null && game.grid[target] == null) {
-      game.grid[target] = { uid: newUid(), type };
+      game.grid[target] = { uid: newUid(), type, stored: 0 };
     }
     return;
   }

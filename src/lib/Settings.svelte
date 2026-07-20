@@ -48,10 +48,10 @@
 {/if}
 
 <style>
-  /* Floats in the top-right of the stage, just below the resource bar. */
+  /* Floats in the top-right corner of the stage. */
   .gear {
     position: absolute;
-    top: 60px;
+    top: 10px;
     right: 10px;
     z-index: 25;
     width: 34px;

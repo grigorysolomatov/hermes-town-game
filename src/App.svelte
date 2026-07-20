@@ -2,14 +2,11 @@
   import Grid from './lib/Grid.svelte';
   import Palette from './lib/Palette.svelte';
   import DragLayer from './lib/DragLayer.svelte';
-  import FlyLayer from './lib/FlyLayer.svelte';
-  import ResourceBar from './lib/ResourceBar.svelte';
   import RunControls from './lib/RunControls.svelte';
   import Settings from './lib/Settings.svelte';
 </script>
 
 <main class="stage">
-  <ResourceBar />
   <Settings />
 
   <section class="board-area">
@@ -19,7 +16,6 @@
   <RunControls />
   <Palette />
 
-  <FlyLayer />
   <DragLayer />
 </main>
 

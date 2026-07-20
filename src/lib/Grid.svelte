@@ -3,6 +3,7 @@
   import { drag, startDrag, canDropAt } from './drag.svelte.js';
   import { worker, stepMs } from './worker.svelte.js';
   import { BUILDINGS } from './buildings.js';
+  import { RESOURCES } from './resources.js';
   import BuildingIcon from './BuildingIcon.svelte';
   import { flip } from 'svelte/animate';
   import { scale } from 'svelte/transition';
@@ -36,13 +37,15 @@
        underneath can be hit-tested for the drop target. -->
   <div class="pieces" class:passthrough={drag.active}>
     {#each placed as p (p.uid)}
+      {@const def = BUILDINGS[p.type]}
+      {@const res = def.produces ? RESOURCES[def.produces] : null}
       <div
         class="piece"
         role="button"
         tabindex="0"
-        aria-label={BUILDINGS[p.type].name}
+        aria-label={def.name}
         class:hidden={isBeingDragged(p.index)}
-        style="left:{(p.index % 5) * 20}%; top:{Math.floor(p.index / 5) * 20}%; --tint:{BUILDINGS[p.type].tint}"
+        style="left:{(p.index % 5) * 20}%; top:{Math.floor(p.index / 5) * 20}%; --tint:{def.tint}"
         animate:flip={{ duration: p.uid === game.justMoved ? 0 : 240 }}
         in:scale={{ duration: 220, start: 0.4 }}
         out:scale={{ duration: 150 }}
@@ -55,6 +58,16 @@
           class:exhausted={worker.exhausted.includes(p.uid)}
         >
           <BuildingIcon type={p.type} />
+
+          {#if res && (p.stored ?? 0) > 0}
+            <div class="badge" style="--rtint:{res.tint}" class:bump={worker.flashing.includes(p.uid)}>
+              <span class="ricon">{res.icon}</span>{p.stored}
+            </div>
+          {/if}
+
+          {#if res && worker.flashing.includes(p.uid)}
+            <div class="plus" style="--rtint:{res.tint}">+1</div>
+          {/if}
         </div>
       </div>
     {/each}
@@ -158,6 +171,66 @@
   .tile.exhausted {
     filter: grayscale(0.85) brightness(0.6);
     opacity: 0.5;
+  }
+
+  /* Stored-resource count, kept on the producing tile itself. */
+  .badge {
+    position: absolute;
+    right: 4%;
+    bottom: 4%;
+    display: flex;
+    align-items: center;
+    gap: 0.12em;
+    padding: 0.1em 0.42em 0.1em 0.28em;
+    border-radius: 999px;
+    font-size: 26cqmin;
+    font-weight: 800;
+    line-height: 1;
+    color: #0f0d1c;
+    font-variant-numeric: tabular-nums;
+    background: color-mix(in srgb, var(--rtint) 88%, white 12%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  .badge .ricon {
+    font-size: 0.78em;
+  }
+  .badge.bump {
+    animation: badgePop 0.38s ease;
+  }
+  @keyframes badgePop {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.35);
+    }
+  }
+
+  /* "+1" that floats up off the tile each time it produces. */
+  .plus {
+    position: absolute;
+    left: 50%;
+    top: 16%;
+    pointer-events: none;
+    font-size: 32cqmin;
+    font-weight: 800;
+    color: color-mix(in srgb, var(--rtint) 75%, white);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+    animation: plusFloat 0.42s ease-out forwards;
+  }
+  @keyframes plusFloat {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 40%) scale(0.6);
+    }
+    30% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translate(-50%, -70%) scale(1);
+    }
   }
 
   /* Building fires when the worker steps onto it. */

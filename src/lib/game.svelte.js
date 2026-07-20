@@ -1,8 +1,7 @@
 // Reactive game state. The board is a flat array of 25 cells (5×5).
 // Each cell is either null or a placed building: { uid, type }.
 export const game = $state({
-  grid: Array(25).fill(null),
-  resources: { food: 0, wood: 0, stone: 0, science: 0, medicine: 0 },
+  grid: Array(25).fill(null), // each cell: null | { uid, type, stored }
   justMoved: null,   // uid to skip FLIP for (its motion was already shown by the drag ghost)
 });
 

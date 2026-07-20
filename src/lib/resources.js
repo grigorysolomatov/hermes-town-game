@@ -7,6 +7,3 @@ export const RESOURCES = {
   science:  { key: 'science',  icon: '🧪', name: 'Science',  tint: '#38bdf8' },
   medicine: { key: 'medicine', icon: '💊', name: 'Medicine', tint: '#f472b6' },
 };
-
-// Display order in the top bar.
-export const RESOURCE_ORDER = ['food', 'wood', 'stone', 'science', 'medicine'];
