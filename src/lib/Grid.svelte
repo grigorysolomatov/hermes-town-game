@@ -69,8 +69,12 @@
             </div>
           {/if}
 
-          {#if res && worker.flashing.includes(p.uid)}
-            <div class="plus" style="--rtint:{res.tint}">+1</div>
+          {#if worker.flashing.includes(p.uid)}
+            {#if res}
+              <div class="plus" style="--rtint:{res.tint}">+1</div>
+            {:else if def.special === 'lift'}
+              <div class="plus" style="--rtint:{def.tint}">−1</div>
+            {/if}
           {/if}
         </div>
       </div>
