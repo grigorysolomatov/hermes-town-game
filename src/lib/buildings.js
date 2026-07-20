@@ -4,7 +4,6 @@
 // this building outputs when the worker triggers it, or null. `special` names
 // a non-production effect the worker applies instead (see worker.svelte.js).
 export const BUILDINGS = {
-  house:   { id: 'house',   name: 'House',   emoji: '🏠', image: null, tint: '#5eead4', produces: null },
   farm:    { id: 'farm',    name: 'Farm',    emoji: '🌾', image: null, tint: '#fbbf24', produces: 'food' },
   sawmill: { id: 'sawmill', name: 'Sawmill', emoji: '🪚', image: null, tint: '#c98a4b', produces: 'wood' },
   mine:    { id: 'mine',    name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
@@ -14,4 +13,4 @@ export const BUILDINGS = {
 };
 
 // Order shown in the palette.
-export const PALETTE = ['house', 'farm', 'sawmill', 'mine', 'lab', 'pharma', 'coffee'];
+export const PALETTE = ['farm', 'sawmill', 'mine', 'lab', 'pharma', 'coffee'];
