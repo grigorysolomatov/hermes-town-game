@@ -16,9 +16,9 @@
   function badgeOf(def) {
     if (def.produces) {
       const r = RESOURCES[def.produces];
-      return { icon: r.icon, tint: r.tint, delta: '+1', showAtZero: false };
+      return { icon: r.icon, tint: r.tint, delta: '+1', showAtZero: false, gain: true };
     }
-    if (def.special) return { icon: def.emoji, tint: def.tint, delta: '−1', showAtZero: true };
+    if (def.special) return { icon: def.emoji, tint: def.tint, delta: '−1', showAtZero: true, gain: false };
     return null;
   }
 
@@ -83,7 +83,7 @@
         <!-- Float lives outside .tile so a just-spent coffee's dimming doesn't
              also fade its own −1. -->
         {#if badge && flashing}
-          <div class="plus" style="--rtint:{badge.tint}">{badge.delta}</div>
+          <div class="plus" class:gain={badge.gain} class:loss={!badge.gain}>{badge.delta}</div>
         {/if}
       </div>
     {/each}
@@ -225,29 +225,48 @@
     }
   }
 
-  /* "+1" that floats up off the tile each time it produces. */
+  /* Floating change label. Gains rise in green; losses sink in red. */
   .plus {
     position: absolute;
     left: 50%;
-    top: 16%;
+    top: 38%;
     pointer-events: none;
     font-size: 32cqmin;
     font-weight: 800;
-    color: color-mix(in srgb, var(--rtint) 75%, white);
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
-    animation: plusFloat 0.42s ease-out forwards;
   }
-  @keyframes plusFloat {
+  .plus.gain {
+    color: #4ade80;
+    animation: floatUp 0.42s ease-out forwards;
+  }
+  .plus.loss {
+    color: #f87171;
+    animation: floatDown 0.42s ease-out forwards;
+  }
+  @keyframes floatUp {
     from {
       opacity: 0;
-      transform: translate(-50%, 40%) scale(0.6);
+      transform: translateX(-50%) translateY(0.4em) scale(0.6);
     }
     30% {
       opacity: 1;
     }
     to {
       opacity: 0;
-      transform: translate(-50%, -70%) scale(1);
+      transform: translateX(-50%) translateY(-1.6em) scale(1);
+    }
+  }
+  @keyframes floatDown {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-0.4em) scale(0.6);
+    }
+    30% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-50%) translateY(1.6em) scale(1);
     }
   }
 
