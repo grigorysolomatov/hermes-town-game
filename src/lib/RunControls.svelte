@@ -3,13 +3,11 @@
 </script>
 
 <div class="run-controls">
-  <div class="turn">Turn <b>{worker.turn}</b></div>
-
   <button class="start" onclick={startRun} disabled={worker.running}>
     {#if worker.running}
       <span class="dot"></span> Running…
     {:else}
-      ▶ Start Run
+      ▶ Start Turn {worker.turn + 1}
     {/if}
   </button>
 
@@ -36,16 +34,6 @@
     gap: 10px;
     padding: 8px 14px;
   }
-  .turn {
-    font-size: 0.82rem;
-    color: var(--muted);
-    white-space: nowrap;
-  }
-  .turn b {
-    color: var(--text);
-    font-variant-numeric: tabular-nums;
-  }
-
   .start {
     flex: 1 1 auto;
     display: flex;
