@@ -1,16 +1,21 @@
-// Building catalogue. `image` is null for now (emoji fallback), but the
-// rendering path already supports images so real art can be dropped in later
-// by setting `image` to a URL/imported asset. `produces` names the resource
-// this building outputs when the worker triggers it, or null. `special` names
-// a non-production effect the worker applies instead (see worker.svelte.js).
+// Building catalogue. The map key is the building's id.
+//   emoji       shown on the tile (see BuildingIcon)
+//   image       null = use the emoji; set a URL/import to use real art instead
+//   tint        theme colour for the tile
+//   produces    resource key this building outputs when triggered, or null
+//   special     a non-production effect the worker applies instead (see worker.svelte.js)
+//   startStored initial (and per-turn recharge) charge count for `special` tiles
 export const BUILDINGS = {
-  farm:    { id: 'farm',    name: 'Farm',    emoji: '🌾', image: null, tint: '#fbbf24', produces: 'food' },
-  sawmill: { id: 'sawmill', name: 'Sawmill', emoji: '🪚', image: null, tint: '#c98a4b', produces: 'wood' },
-  mine:    { id: 'mine',    name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
-  lab:     { id: 'lab',     name: 'Lab',     emoji: '🔬', image: null, tint: '#38bdf8', produces: 'science' },
-  pharma:  { id: 'pharma',  name: 'Pharma',  emoji: '🏥', image: null, tint: '#f472b6', produces: 'medicine' },
-  coffee:  { id: 'coffee',  name: 'Coffee',  emoji: '☕', image: null, tint: '#b08968', produces: null, special: 'lift', startStored: 1 },
+  farm:    { name: 'Farm',    emoji: '🌾', image: null, tint: '#fbbf24', produces: 'food' },
+  sawmill: { name: 'Sawmill', emoji: '🪚', image: null, tint: '#c98a4b', produces: 'wood' },
+  mine:    { name: 'Mine',    emoji: '⛏️', image: null, tint: '#a78bfa', produces: 'stone' },
+  lab:     { name: 'Lab',     emoji: '🔬', image: null, tint: '#38bdf8', produces: 'science' },
+  pharma:  { name: 'Pharma',  emoji: '🏥', image: null, tint: '#f472b6', produces: 'medicine' },
+  coffee:  { name: 'Coffee',  emoji: '☕', image: null, tint: '#b08968', produces: null, special: 'lift', startStored: 1 },
 };
 
 // Order shown in the palette.
 export const PALETTE = ['farm', 'sawmill', 'mine', 'lab', 'pharma', 'coffee'];
+
+// Stored value a freshly-placed (or recharged) building of this type starts at.
+export const initialStored = (type) => BUILDINGS[type].startStored ?? 0;

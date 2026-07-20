@@ -1,6 +1,6 @@
 import { tick } from 'svelte';
 import { game, newUid } from './game.svelte.js';
-import { BUILDINGS } from './buildings.js';
+import { initialStored } from './buildings.js';
 
 // Custom pointer-based drag (works for both touch and mouse, unlike the native
 // HTML5 drag-and-drop which is unreliable on mobile).
@@ -84,7 +84,7 @@ function resolveDrop(target) {
   const { from, type } = drag;
   if (from.source === 'palette') {
     if (target != null && game.grid[target] == null) {
-      game.grid[target] = { uid: newUid(), type, stored: BUILDINGS[type].startStored ?? 0 };
+      game.grid[target] = { uid: newUid(), type, stored: initialStored(type) };
     }
     return;
   }

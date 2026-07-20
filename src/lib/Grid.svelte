@@ -4,11 +4,23 @@
   import { worker, stepMs } from './worker.svelte.js';
   import { BUILDINGS } from './buildings.js';
   import { RESOURCES } from './resources.js';
+  import { GRID_SIZE, CELL_COUNT, CELL_PCT, cellLeft, cellTop } from './grid.js';
   import BuildingIcon from './BuildingIcon.svelte';
   import { flip } from 'svelte/animate';
   import { scale } from 'svelte/transition';
 
-  const cells = Array.from({ length: 25 }, (_, i) => i);
+  const cells = Array.from({ length: CELL_COUNT }, (_, i) => i);
+
+  // What a tile displays on its stored-count badge / float, or null if it has
+  // no store. Producers accrue their resource (+1); charge tiles spend (−1).
+  function badgeOf(def) {
+    if (def.produces) {
+      const r = RESOURCES[def.produces];
+      return { icon: r.icon, tint: r.tint, delta: '+1', showAtZero: false };
+    }
+    if (def.special) return { icon: def.emoji, tint: def.tint, delta: '−1', showAtZero: true };
+    return null;
+  }
 
   // Buildings as a keyed list (by uid) positioned over the grid via their cell
   // index. Keeping identity stable lets animate:flip glide them between cells.
@@ -20,7 +32,7 @@
     drag.active && drag.from?.source === 'grid' && drag.from.index === i;
 </script>
 
-<div class="grid">
+<div class="grid" style="--n:{GRID_SIZE}; --cell:{CELL_PCT}%">
   {#each cells as i}
     <div
       class="cell"
@@ -38,14 +50,16 @@
   <div class="pieces" class:passthrough={drag.active}>
     {#each placed as p (p.uid)}
       {@const def = BUILDINGS[p.type]}
-      {@const res = def.produces ? RESOURCES[def.produces] : null}
+      {@const badge = badgeOf(def)}
+      {@const stored = p.stored ?? 0}
+      {@const flashing = worker.flashing.includes(p.uid)}
       <div
         class="piece"
         role="button"
         tabindex="0"
         aria-label={def.name}
         class:hidden={isBeingDragged(p.index)}
-        style="left:{(p.index % 5) * 20}%; top:{Math.floor(p.index / 5) * 20}%; --tint:{def.tint}"
+        style="left:{cellLeft(p.index)}%; top:{cellTop(p.index)}%; --tint:{def.tint}"
         animate:flip={{ duration: p.uid === game.justMoved ? 0 : 240 }}
         in:scale={{ duration: 220, start: 0.4 }}
         out:scale={{ duration: 150 }}
@@ -54,27 +68,19 @@
         <div
           class="tile"
           data-uid={p.uid}
-          class:triggered={worker.flashing.includes(p.uid)}
-          class:exhausted={def.special === 'lift' && (p.stored ?? 0) === 0}
+          class:triggered={flashing}
+          class:exhausted={def.special && stored === 0}
         >
           <BuildingIcon type={p.type} />
 
-          {#if res && (p.stored ?? 0) > 0}
-            <div class="badge" style="--rtint:{res.tint}" class:bump={worker.flashing.includes(p.uid)}>
-              <span class="ricon">{res.icon}</span>{p.stored}
-            </div>
-          {:else if def.special === 'lift'}
-            <div class="badge" style="--rtint:{def.tint}" class:bump={worker.flashing.includes(p.uid)}>
-              <span class="ricon">{def.emoji}</span>{p.stored ?? 0}
+          {#if badge && (badge.showAtZero || stored > 0)}
+            <div class="badge" style="--rtint:{badge.tint}" class:bump={flashing}>
+              <span class="ricon">{badge.icon}</span>{stored}
             </div>
           {/if}
 
-          {#if worker.flashing.includes(p.uid)}
-            {#if res}
-              <div class="plus" style="--rtint:{res.tint}">+1</div>
-            {:else if def.special === 'lift'}
-              <div class="plus" style="--rtint:{def.tint}">−1</div>
-            {/if}
+          {#if badge && flashing}
+            <div class="plus" style="--rtint:{badge.tint}">{badge.delta}</div>
           {/if}
         </div>
       </div>
@@ -84,7 +90,7 @@
   {#if worker.index != null}
     <div
       class="worker"
-      style="left:{(worker.index % 5) * 20}%; top:{Math.floor(worker.index / 5) * 20}%; --step:{stepMs()}ms"
+      style="left:{cellLeft(worker.index)}%; top:{cellTop(worker.index)}%; --step:{stepMs()}ms"
       in:scale={{ duration: 180, start: 0.3 }}
       out:scale={{ duration: 180 }}
     >
@@ -99,8 +105,8 @@
     width: min(90vw, 66vh, 440px);
     aspect-ratio: 1;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(var(--n), 1fr);
+    grid-template-rows: repeat(var(--n), 1fr);
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0)),
@@ -142,8 +148,8 @@
 
   .piece {
     position: absolute;
-    width: 20%;
-    height: 20%;
+    width: var(--cell);
+    height: var(--cell);
     will-change: transform;
   }
   .piece.hidden {
@@ -261,8 +267,8 @@
   /* The worker travelling the board during a run. */
   .worker {
     position: absolute;
-    width: 20%;
-    height: 20%;
+    width: var(--cell);
+    height: var(--cell);
     z-index: 3;
     pointer-events: none;
     transition: left var(--step) linear, top var(--step) linear;

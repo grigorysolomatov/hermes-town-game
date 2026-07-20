@@ -1,21 +1,6 @@
 import { game } from './game.svelte.js';
-import { BUILDINGS } from './buildings.js';
-
-const N = 5;
-
-// Boustrophedon (snake / zig-zag) order: left→right, then right→left, row by
-// row, top to bottom. Consecutive cells are always adjacent, so the worker
-// glides smoothly along the whole path.
-const PATH = (() => {
-  const p = [];
-  for (let r = 0; r < N; r++) {
-    for (let c = 0; c < N; c++) {
-      const col = r % 2 === 0 ? c : N - 1 - c;
-      p.push(r * N + col);
-    }
-  }
-  return p;
-})();
+import { BUILDINGS, initialStored } from './buildings.js';
+import { SNAKE_PATH as PATH, cellAbove } from './grid.js';
 
 // Worker step pace (ms per cell) — this is the "how fast the turn plays out".
 export const SPEEDS = [
@@ -46,10 +31,11 @@ export function startRun() {
   worker.running = true;
   worker.turn += 1;
 
-  // Recharge single-charge tiles (coffee) at the start of each turn.
+  // Recharge charge tiles (coffee) at the start of each turn. Producers keep
+  // their accumulated stock — only `special` tiles reset.
   for (const cell of game.grid) {
-    if (cell && BUILDINGS[cell.type].special === 'lift') {
-      cell.stored = BUILDINGS[cell.type].startStored ?? 1;
+    if (cell && BUILDINGS[cell.type].special) {
+      cell.stored = initialStored(cell.type);
     }
   }
 
@@ -70,8 +56,8 @@ export function startRun() {
         if ((b.stored ?? 0) > 0) {
           b.stored -= 1;
           flash(b.uid);
-          const row = Math.floor(cell / N);
-          if (row > 0) next = PATH.indexOf(cell - N); // resume the sweep from above
+          const above = cellAbove(cell);
+          if (above != null) next = PATH.indexOf(above); // resume the sweep from above
         }
       } else if (def.produces) {
         // Producers fire every time the worker hits them (coffee can combo them).
