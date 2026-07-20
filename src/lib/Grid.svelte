@@ -180,8 +180,9 @@
   /* Stored-resource count, kept on the producing tile itself. */
   .badge {
     position: absolute;
-    right: 4%;
+    left: 50%;
     bottom: 4%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 0.12em;
@@ -204,10 +205,10 @@
   @keyframes badgePop {
     0%,
     100% {
-      transform: scale(1);
+      transform: translateX(-50%) scale(1);
     }
     40% {
-      transform: scale(1.35);
+      transform: translateX(-50%) scale(1.35);
     }
   }
 
