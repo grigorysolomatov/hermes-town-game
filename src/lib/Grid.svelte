@@ -1,6 +1,7 @@
 <script>
   import { game } from './game.svelte.js';
   import { drag, startDrag, canDropAt } from './drag.svelte.js';
+  import { worker, stepMs } from './worker.svelte.js';
   import { BUILDINGS } from './buildings.js';
   import BuildingIcon from './BuildingIcon.svelte';
   import { flip } from 'svelte/animate';
@@ -47,10 +48,23 @@
         out:scale={{ duration: 150 }}
         onpointerdown={(e) => startDrag(e, p.type, { source: 'grid', index: p.index })}
       >
-        <div class="tile" data-uid={p.uid}><BuildingIcon type={p.type} /></div>
+        <div class="tile" data-uid={p.uid} class:triggered={worker.flashing.includes(p.uid)}>
+          <BuildingIcon type={p.type} />
+        </div>
       </div>
     {/each}
   </div>
+
+  {#if worker.index != null}
+    <div
+      class="worker"
+      style="left:{(worker.index % 5) * 20}%; top:{Math.floor(worker.index / 5) * 20}%; --step:{stepMs()}ms"
+      in:scale={{ duration: 180, start: 0.3 }}
+      out:scale={{ duration: 180 }}
+    >
+      <div class="worker-inner"></div>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -132,5 +146,53 @@
   .tile:active {
     cursor: grabbing;
     transform: scale(0.96);
+  }
+
+  /* Building fires when the worker steps onto it. */
+  .tile.triggered {
+    animation: trigger 0.38s ease;
+  }
+  @keyframes trigger {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    35% {
+      transform: scale(1.18);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 0 24px color-mix(in srgb, var(--tint) 65%, transparent);
+    }
+  }
+
+  /* The worker travelling the board during a run. */
+  .worker {
+    position: absolute;
+    width: 20%;
+    height: 20%;
+    z-index: 3;
+    pointer-events: none;
+    transition: left var(--step) linear, top var(--step) linear;
+  }
+  .worker-inner {
+    position: absolute;
+    inset: 3px;
+    display: grid;
+    place-items: center;
+    container-type: size;
+    animation: bob 0.6s ease-in-out infinite;
+  }
+  .worker-inner::before {
+    content: '👷';
+    font-size: 46cqmin;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.55));
+  }
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(2%);
+    }
+    50% {
+      transform: translateY(-8%);
+    }
   }
 </style>

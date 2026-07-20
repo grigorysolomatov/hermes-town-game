@@ -3,7 +3,6 @@
 export const game = $state({
   grid: Array(25).fill(null),
   resources: { food: 0, wood: 0, stone: 0, science: 0, medicine: 0 },
-  speed: 1,          // time scale: 0 paused, 1 normal, 3 fast
   justMoved: null,   // uid to skip FLIP for (its motion was already shown by the drag ghost)
 });
 
