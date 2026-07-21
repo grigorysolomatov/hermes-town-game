@@ -7,6 +7,7 @@
   import { GRID_SIZE, CELL_COUNT, CELL_PCT, cellLeft, cellTop } from './grid.js';
   import BuildingIcon from './BuildingIcon.svelte';
   import workerImg from './assets/worker.png';
+  import batteryImg from './assets/res-battery.png';
   import { flip } from 'svelte/animate';
   import { scale } from 'svelte/transition';
 
@@ -109,6 +110,11 @@
       out:scale={{ duration: 180 }}
     >
       <div class="worker-inner"><img class="worker-img" src={workerImg} alt="" draggable="false" /></div>
+      {#key worker.energy}
+        <div class="energy" class:low={worker.energy <= 0}>
+          <img class="energy-icon" src={batteryImg} alt="" draggable="false" />{worker.energy}
+        </div>
+      {/key}
     </div>
   {/if}
 </div>
@@ -307,7 +313,51 @@
     height: var(--cell);
     z-index: 3;
     pointer-events: none;
+    container-type: size; /* for the energy badge's cqmin sizing */
     transition: left var(--step) linear, top var(--step) linear;
+  }
+
+  /* The worker's current energy, shown as a battery badge above its head. */
+  .energy {
+    position: absolute;
+    top: -14%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.05em;
+    padding: 0.06em 0.42em 0.06em 0.22em;
+    border-radius: 999px;
+    font-size: 23cqmin;
+    font-weight: 800;
+    line-height: 1;
+    color: #1c3a20;
+    font-variant-numeric: tabular-nums;
+    background: color-mix(in srgb, #b7e6bd 90%, white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    z-index: 5;
+    animation: energyPop 0.3s ease;
+  }
+  .energy.low {
+    background: color-mix(in srgb, #f0a99a 92%, white);
+    color: #4a1c14;
+  }
+  .energy-icon {
+    width: 1.05em;
+    height: 1.05em;
+    object-fit: contain;
+    margin: -0.15em 0;
+  }
+  @keyframes energyPop {
+    0% {
+      transform: translateX(-50%) scale(1);
+    }
+    45% {
+      transform: translateX(-50%) scale(1.18);
+    }
+    100% {
+      transform: translateX(-50%) scale(1);
+    }
   }
   .worker-inner {
     position: absolute;
