@@ -152,8 +152,10 @@
     transition: background 0.15s ease, box-shadow 0.15s ease, color 0.15s ease, transform 0.1s ease;
   }
   .sp .ic {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     line-height: 1;
+    letter-spacing: -0.12em;
+    color: var(--text);
   }
   .sp .lb {
     font-size: 0.75rem;

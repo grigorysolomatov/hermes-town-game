@@ -4,9 +4,9 @@ import { SNAKE_PATH as PATH, cellAbove, neighbors } from './grid.js';
 
 // Worker step pace (ms per cell) — this is the "how fast the turn plays out".
 export const SPEEDS = [
-  { name: 'slow',   label: 'Slow',   icon: '🐢', ms: 300 },
-  { name: 'normal', label: 'Normal', icon: '🚶', ms: 160 },
-  { name: 'fast',   label: 'Fast',   icon: '🐇', ms: 75 },
+  { name: 'slow',   label: 'Slow',   icon: '▸', ms: 300 },
+  { name: 'normal', label: 'Normal', icon: '▸▸', ms: 160 },
+  { name: 'fast',   label: 'Fast',   icon: '▸▸▸', ms: 75 },
 ];
 
 export const worker = $state({
