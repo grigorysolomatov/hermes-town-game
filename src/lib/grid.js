@@ -11,6 +11,24 @@ export const colOf = (i) => i % GRID_SIZE;
 // The cell directly above `i`, or null if `i` is on the top row.
 export const cellAbove = (i) => (rowOf(i) > 0 ? i - GRID_SIZE : null);
 
+// The up-to-8 cells surrounding `i` (including diagonals), clamped to the board.
+export function neighbors(i) {
+  const r = rowOf(i);
+  const c = colOf(i);
+  const out = [];
+  for (let dr = -1; dr <= 1; dr++) {
+    for (let dc = -1; dc <= 1; dc++) {
+      if (dr === 0 && dc === 0) continue;
+      const nr = r + dr;
+      const nc = c + dc;
+      if (nr >= 0 && nr < GRID_SIZE && nc >= 0 && nc < GRID_SIZE) {
+        out.push(nr * GRID_SIZE + nc);
+      }
+    }
+  }
+  return out;
+}
+
 // Percent offset of a cell's top-left corner within the board.
 export const cellLeft = (i) => colOf(i) * CELL_PCT;
 export const cellTop = (i) => rowOf(i) * CELL_PCT;

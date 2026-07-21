@@ -11,16 +11,21 @@
 
   const cells = Array.from({ length: CELL_COUNT }, (_, i) => i);
 
-  // What a tile displays on its stored-count badge / float, or null if it has
-  // no store. Producers accrue their resource (+1); charge tiles spend (−1).
+  // The stored-count badge a tile shows, or null if it stores nothing. Resource
+  // producers (and the trade post's coins) show the resource icon; charge tiles
+  // (coffee) show their own emoji and stay visible at 0. `showAtZero` keeps a
+  // depleted charge tile's badge on screen.
   function badgeOf(def) {
     if (def.produces) {
       const r = RESOURCES[def.produces];
-      return { icon: r.icon, tint: r.tint, delta: '+1', showAtZero: false, gain: true };
+      return { icon: r.icon, tint: r.tint, showAtZero: false };
     }
-    if (def.special) return { icon: def.emoji, tint: def.tint, delta: '−1', showAtZero: true, gain: false };
+    if (def.special) return { icon: def.emoji, tint: def.tint, showAtZero: true };
     return null;
   }
+
+  // Sign a floating label: '+n' or '−n'.
+  const signed = (d) => (d > 0 ? '+' : '−') + Math.abs(d);
 
   // Buildings as a keyed list (by uid) positioned over the grid via their cell
   // index. Keeping identity stable lets animate:flip glide them between cells.
@@ -52,7 +57,8 @@
       {@const def = BUILDINGS[p.type]}
       {@const badge = badgeOf(def)}
       {@const stored = p.stored ?? 0}
-      {@const flashing = worker.flashing.includes(p.uid)}
+      {@const fl = worker.flashes.findLast((f) => f.uid === p.uid)}
+      {@const flashing = !!fl}
       <div
         class="piece"
         role="button"
@@ -69,7 +75,7 @@
           class="tile"
           data-uid={p.uid}
           class:triggered={flashing}
-          class:exhausted={def.special && stored === 0}
+          class:exhausted={def.startStored != null && stored === 0}
         >
           <BuildingIcon type={p.type} />
 
@@ -81,9 +87,10 @@
         </div>
 
         <!-- Float lives outside .tile so a just-spent coffee's dimming doesn't
-             also fade its own −1. -->
-        {#if badge && flashing}
-          <div class="plus" class:gain={badge.gain} class:loss={!badge.gain}>{badge.delta}</div>
+             also fade its own label. Direction/colour follow the actual change,
+             so a producer sold from by a trade post shows a red −1. -->
+        {#if fl}
+          <div class="plus" class:gain={fl.delta > 0} class:loss={fl.delta < 0}>{signed(fl.delta)}</div>
         {/if}
       </div>
     {/each}

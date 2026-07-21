@@ -5,6 +5,7 @@ import farmImg from './assets/farm.png';
 import pharmaImg from './assets/pharma.png';
 import labImg from './assets/lab.png';
 import mineImg from './assets/mine.png';
+import tradePostImg from './assets/tradepost.png';
 
 // Building catalogue. The map key is the building's id.
 //   emoji       shown on the tile (see BuildingIcon)
@@ -21,10 +22,11 @@ export const BUILDINGS = {
   lab:     { name: 'Lab',     emoji: '🔬', image: labImg, tint: '#38bdf8', produces: 'science' },
   pharma:  { name: 'Pharma',  emoji: '🏥', image: pharmaImg, tint: '#f472b6', produces: 'medicine' },
   coffee:  { name: 'Coffee Shop', emoji: '☕', image: coffeeShopImg, tint: '#b08968', produces: null, special: 'lift', startStored: 1 },
+  tradepost: { name: 'Trade Post', emoji: '🤝', image: tradePostImg, tint: '#f0b429', produces: 'coin', special: 'trade' },
 };
 
 // Order shown in the palette.
-export const PALETTE = ['farm', 'sawmill', 'quarry', 'mine', 'lab', 'pharma', 'coffee'];
+export const PALETTE = ['farm', 'sawmill', 'quarry', 'mine', 'lab', 'pharma', 'coffee', 'tradepost'];
 
 // Stored value a freshly-placed (or recharged) building of this type starts at.
 export const initialStored = (type) => BUILDINGS[type].startStored ?? 0;

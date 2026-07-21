@@ -7,4 +7,5 @@ export const RESOURCES = {
   coal:     { icon: '⚫', name: 'Coal',     tint: '#6b7280' },
   science:  { icon: '🧪', name: 'Science',  tint: '#38bdf8' },
   medicine: { icon: '💊', name: 'Medicine', tint: '#f472b6' },
+  coin:     { icon: '🪙', name: 'Coin',     tint: '#f0b429' },
 };
