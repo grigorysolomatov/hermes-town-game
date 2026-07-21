@@ -18,9 +18,9 @@
   function badgeOf(def) {
     if (def.produces) {
       const r = RESOURCES[def.produces];
-      return { icon: r.icon, tint: r.tint, showAtZero: false };
+      return { icon: r.icon, image: r.image, tint: r.tint, showAtZero: false };
     }
-    if (def.special) return { icon: def.emoji, tint: def.tint, showAtZero: true };
+    if (def.special) return { icon: def.emoji, image: null, tint: def.tint, showAtZero: true };
     return null;
   }
 
@@ -81,7 +81,11 @@
 
           {#if badge && (badge.showAtZero || stored > 0)}
             <div class="badge" style="--rtint:{badge.tint}" class:bump={flashing}>
-              <span class="ricon">{badge.icon}</span>{stored}
+              {#if badge.image}
+                <img class="ricon-img" src={badge.image} alt="" draggable="false" />
+              {:else}
+                <span class="ricon">{badge.icon}</span>
+              {/if}{stored}
             </div>
           {/if}
         </div>
@@ -218,6 +222,12 @@
   }
   .badge .ricon {
     font-size: 0.78em;
+  }
+  .badge .ricon-img {
+    width: 1.05em;
+    height: 1.05em;
+    object-fit: contain;
+    margin: -0.15em 0;
   }
   .badge.bump {
     animation: badgePop 0.38s ease;
