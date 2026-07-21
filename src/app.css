@@ -1,10 +1,21 @@
 :root {
-  color-scheme: dark;
-  --page-bg: #0a0a12;
-  --stage-1: #171426;
-  --stage-2: #0f0d1c;
-  --text: #e9e9f2;
-  --muted: #9a9ab0;
+  color-scheme: light;
+  /* Warm, light "cozy board game" palette to match the flat cartoon icons. */
+  --page-bg: #c9b088;
+  --stage-1: #fdf6ea;
+  --stage-2: #f5e7cd;
+  --board: #ead4ac;   /* grid backing */
+  --slot: #f6ecd6;    /* empty cell */
+  --card: #fffcf5;    /* tile / chip card */
+  --panel: #f8ecd6;   /* bottom panel, modals */
+  --text: #4a3728;    /* dark brown ink */
+  --muted: #9c8163;
+  --ink: #4a3728;     /* outlines */
+  --line: rgba(74, 55, 40, 0.16);
+  --accent: #f2a43c;  /* warm highlight */
+  --go: #58b368;      /* primary action */
+  --good: #4fae5a;
+  --bad: #e5603f;
 }
 
 * {
@@ -20,7 +31,7 @@ body {
 }
 
 body {
-  background: radial-gradient(1200px 800px at 50% -10%, #1b1732, var(--page-bg));
+  background: radial-gradient(1200px 800px at 50% -10%, #e0caa1, var(--page-bg));
   color: var(--text);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   overflow: hidden;
@@ -59,8 +70,8 @@ body {
 @media (min-width: 481px) {
   .stage {
     height: min(100dvh, 900px);
-    border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+    border-radius: 26px;
+    border: 3px solid var(--ink);
+    box-shadow: 0 24px 60px rgba(74, 55, 40, 0.4);
   }
 }

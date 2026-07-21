@@ -6,6 +6,7 @@
   import { RESOURCES } from './resources.js';
   import { GRID_SIZE, CELL_COUNT, CELL_PCT, cellLeft, cellTop } from './grid.js';
   import BuildingIcon from './BuildingIcon.svelte';
+  import workerImg from './assets/worker.png';
   import { flip } from 'svelte/animate';
   import { scale } from 'svelte/transition';
 
@@ -107,7 +108,7 @@
       in:scale={{ duration: 180, start: 0.3 }}
       out:scale={{ duration: 180 }}
     >
-      <div class="worker-inner"></div>
+      <div class="worker-inner"><img class="worker-img" src={workerImg} alt="" draggable="false" /></div>
     </div>
   {/if}
 </div>
@@ -120,11 +121,11 @@
     display: grid;
     grid-template-columns: repeat(var(--n), 1fr);
     grid-template-rows: repeat(var(--n), 1fr);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0)),
-      rgba(0, 0, 0, 0.22);
-    box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.4), 0 12px 34px rgba(0, 0, 0, 0.35);
+    border-radius: 22px;
+    border: 3px solid var(--ink);
+    background: var(--board);
+    box-shadow: inset 0 2px 8px rgba(74, 55, 40, 0.18),
+      0 6px 0 rgba(74, 55, 40, 0.12), 0 14px 26px rgba(74, 55, 40, 0.2);
     touch-action: none;
   }
 
@@ -135,20 +136,20 @@
     position: absolute;
     inset: 5px;
     border-radius: 13px;
-    background: rgba(255, 255, 255, 0.025);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    background: var(--slot);
+    box-shadow: inset 0 0 0 2px rgba(74, 55, 40, 0.1);
     transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
   }
   .cell.target .slot {
     transform: scale(1.03);
   }
   .cell.valid .slot {
-    background: rgba(94, 234, 212, 0.14);
-    box-shadow: inset 0 0 0 2px rgba(94, 234, 212, 0.7), 0 0 22px rgba(94, 234, 212, 0.25);
+    background: rgba(88, 179, 104, 0.22);
+    box-shadow: inset 0 0 0 2px rgba(79, 174, 90, 0.9), 0 0 18px rgba(79, 174, 90, 0.3);
   }
   .cell.invalid .slot {
-    background: rgba(248, 113, 113, 0.12);
-    box-shadow: inset 0 0 0 2px rgba(248, 113, 113, 0.7);
+    background: rgba(229, 96, 63, 0.18);
+    box-shadow: inset 0 0 0 2px rgba(229, 96, 63, 0.9);
   }
 
   .pieces {
@@ -179,14 +180,9 @@
     container-type: size;
     cursor: grab;
     touch-action: none;
-    background: linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--tint) 32%, transparent),
-      color-mix(in srgb, var(--tint) 8%, transparent)
-    );
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      inset 0 0 0 1px color-mix(in srgb, var(--tint) 30%, transparent),
-      0 6px 14px rgba(0, 0, 0, 0.35);
+    background: var(--card);
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tint) 55%, var(--card)),
+      0 3px 0 rgba(74, 55, 40, 0.2), 0 5px 10px rgba(74, 55, 40, 0.16);
     transition: box-shadow 0.15s ease, transform 0.12s ease, filter 0.3s ease,
       opacity 0.3s ease;
   }
@@ -249,15 +245,16 @@
     top: 38%;
     pointer-events: none;
     font-size: 32cqmin;
-    font-weight: 800;
-    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+    font-weight: 900;
+    -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 2px 4px rgba(74, 55, 40, 0.35);
   }
   .plus.gain {
-    color: #4ade80;
+    color: #2f9e4e;
     animation: floatUp 0.42s ease-out forwards;
   }
   .plus.loss {
-    color: #f87171;
+    color: #db3f26;
     animation: floatDown 0.42s ease-out forwards;
   }
   @keyframes floatUp {
@@ -317,13 +314,13 @@
     inset: 3px;
     display: grid;
     place-items: center;
-    container-type: size;
     animation: bob 0.6s ease-in-out infinite;
   }
-  .worker-inner::before {
-    content: '👷';
-    font-size: 46cqmin;
-    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.55));
+  .worker-img {
+    width: 96%;
+    height: 96%;
+    object-fit: contain;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4));
   }
   @keyframes bob {
     0%,

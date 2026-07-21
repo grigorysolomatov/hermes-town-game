@@ -58,21 +58,20 @@
     height: 34px;
     display: grid;
     place-items: center;
-    border-radius: 9px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
+    border-radius: 11px;
+    border: 2px solid var(--ink);
+    background: var(--card);
+    box-shadow: 0 3px 0 rgba(74, 55, 40, 0.2);
     font-size: 1.05rem;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.2s ease;
   }
   .gear:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: #fff;
   }
   .gear.on {
     transform: rotate(45deg);
-    background: rgba(124, 108, 255, 0.22);
-    box-shadow: inset 0 0 0 1px rgba(124, 108, 255, 0.7);
+    background: var(--accent);
   }
 
   /* Contained within the stage frame (stage is position:relative). */
@@ -83,15 +82,15 @@
     display: grid;
     place-items: center;
     padding: 20px;
-    background: rgba(5, 4, 12, 0.55);
+    background: rgba(74, 55, 40, 0.4);
     backdrop-filter: blur(3px);
   }
   .modal {
     width: min(320px, 100%);
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: linear-gradient(180deg, #1b1830, #141223);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    border: 3px solid var(--ink);
+    background: var(--panel);
+    box-shadow: 0 6px 0 rgba(74, 55, 40, 0.25), 0 24px 50px rgba(74, 55, 40, 0.4);
     overflow: hidden;
   }
   header {
@@ -99,7 +98,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 14px 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 2px solid var(--line);
   }
   h2 {
     font-size: 1rem;
@@ -111,17 +110,16 @@
     height: 30px;
     display: grid;
     place-items: center;
-    border-radius: 8px;
-    border: none;
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--muted);
+    border-radius: 9px;
+    border: 2px solid var(--ink);
+    background: var(--card);
+    color: var(--text);
     font-size: 0.9rem;
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
   }
   .close:hover {
-    background: rgba(255, 255, 255, 0.12);
-    color: var(--text);
+    background: #fff;
   }
 
   .setting {
@@ -146,9 +144,9 @@
     gap: 4px;
     padding: 10px 6px;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--muted);
+    border: 2px solid var(--ink);
+    background: var(--card);
+    color: var(--text);
     font: inherit;
     cursor: pointer;
     transition: background 0.15s ease, box-shadow 0.15s ease, color 0.15s ease, transform 0.1s ease;
@@ -165,7 +163,7 @@
   }
   .sp.active {
     color: var(--text);
-    background: rgba(124, 108, 255, 0.22);
-    box-shadow: inset 0 0 0 1px rgba(124, 108, 255, 0.7);
+    background: var(--accent);
+    box-shadow: inset 0 0 0 2px var(--ink);
   }
 </style>

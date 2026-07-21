@@ -33,8 +33,8 @@
   .palette {
     flex: 0 0 auto;
     position: relative;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.18));
+    border-top: 3px solid var(--ink);
+    background: var(--panel);
   }
 
   .handle {
@@ -58,7 +58,7 @@
     width: 40px;
     height: 4px;
     border-radius: 2px;
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(74, 55, 40, 0.28);
   }
   .handle .label {
     font-weight: 600;
@@ -86,7 +86,7 @@
     bottom: 0;
     width: 32px;
     pointer-events: none;
-    background: linear-gradient(to right, rgba(15, 13, 28, 0), rgba(15, 13, 28, 0.85));
+    background: linear-gradient(to right, rgba(248, 236, 214, 0), var(--panel));
     transition: opacity 0.25s ease;
   }
   .palette.collapsed .items-wrap::after {
@@ -107,14 +107,14 @@
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+    scrollbar-color: rgba(74, 55, 40, 0.3) transparent;
     transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
   }
   .items::-webkit-scrollbar {
     height: 6px;
   }
   .items::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.22);
+    background: rgba(74, 55, 40, 0.28);
     border-radius: 3px;
   }
   .palette.collapsed .items {
@@ -148,20 +148,15 @@
     display: grid;
     place-items: center;
     container-type: size;
-    background: linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--tint) 30%, transparent),
-      color-mix(in srgb, var(--tint) 8%, transparent)
-    );
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14),
-      inset 0 0 0 1px color-mix(in srgb, var(--tint) 32%, transparent),
-      0 6px 14px rgba(0, 0, 0, 0.3);
+    background: var(--card);
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tint) 55%, var(--card)),
+      0 3px 0 rgba(74, 55, 40, 0.2), 0 5px 10px rgba(74, 55, 40, 0.16);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .item:hover .tile {
     transform: translateY(-3px);
-    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.4),
-      inset 0 0 0 1px color-mix(in srgb, var(--tint) 55%, transparent);
+    box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tint) 70%, var(--card)),
+      0 5px 0 rgba(74, 55, 40, 0.2), 0 10px 18px rgba(74, 55, 40, 0.22);
   }
   .item:active .tile {
     transform: scale(0.94);

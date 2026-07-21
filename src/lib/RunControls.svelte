@@ -26,34 +26,37 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 10px 16px;
-    border-radius: 12px;
-    border: none;
+    padding: 12px 16px;
+    border-radius: 14px;
+    border: 2.5px solid var(--ink);
     font: inherit;
-    font-weight: 600;
-    font-size: 0.92rem;
-    color: #0f0d1c;
-    background: linear-gradient(160deg, #a78bfa, #7c6cff);
-    box-shadow: 0 6px 18px rgba(124, 108, 255, 0.4);
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.01em;
+    color: #fff;
+    background: var(--go);
+    box-shadow: 0 4px 0 var(--ink), 0 7px 12px rgba(74, 55, 40, 0.25);
+    text-shadow: 0 1px 1px rgba(74, 55, 40, 0.35);
     cursor: pointer;
-    transition: transform 0.1s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    transition: transform 0.08s ease, box-shadow 0.12s ease, filter 0.15s ease;
   }
   .start:hover:not(:disabled) {
-    filter: brightness(1.06);
+    filter: brightness(1.05);
   }
   .start:active:not(:disabled) {
-    transform: scale(0.97);
+    transform: translateY(3px);
+    box-shadow: 0 1px 0 var(--ink), 0 2px 6px rgba(74, 55, 40, 0.25);
   }
   .start:disabled {
     cursor: default;
-    filter: saturate(0.5) brightness(0.85);
-    box-shadow: none;
+    filter: saturate(0.35) brightness(0.98);
+    color: rgba(255, 255, 255, 0.85);
   }
   .dot {
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #0f0d1c;
+    background: #fff;
     animation: pulse 0.8s ease-in-out infinite;
   }
   @keyframes pulse {
