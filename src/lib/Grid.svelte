@@ -21,7 +21,7 @@
       const r = RESOURCES[def.produces];
       return { icon: r.icon, image: r.image, tint: r.tint, showAtZero: false };
     }
-    if (def.special) return { icon: def.emoji, image: null, tint: def.tint, showAtZero: true };
+    if (def.special) return { icon: def.emoji, image: def.badgeImage ?? null, tint: def.tint, showAtZero: true };
     return null;
   }
 
