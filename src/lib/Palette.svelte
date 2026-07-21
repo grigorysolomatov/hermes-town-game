@@ -58,7 +58,7 @@
     width: 40px;
     height: 4px;
     border-radius: 2px;
-    background: rgba(74, 55, 40, 0.28);
+    background: rgba(255, 255, 255, 0.28);
   }
   .handle .label {
     font-weight: 600;
@@ -107,14 +107,14 @@
     overscroll-behavior-x: contain;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;
-    scrollbar-color: rgba(74, 55, 40, 0.3) transparent;
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
     transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
   }
   .items::-webkit-scrollbar {
     height: 6px;
   }
   .items::-webkit-scrollbar-thumb {
-    background: rgba(74, 55, 40, 0.28);
+    background: rgba(255, 255, 255, 0.22);
     border-radius: 3px;
   }
   .palette.collapsed .items {
@@ -150,13 +150,13 @@
     container-type: size;
     background: var(--card);
     box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tint) 55%, var(--card)),
-      0 3px 0 rgba(74, 55, 40, 0.2), 0 5px 10px rgba(74, 55, 40, 0.16);
+      0 3px 0 rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.16);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .item:hover .tile {
     transform: translateY(-3px);
     box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tint) 70%, var(--card)),
-      0 5px 0 rgba(74, 55, 40, 0.2), 0 10px 18px rgba(74, 55, 40, 0.22);
+      0 5px 0 rgba(0, 0, 0, 0.2), 0 10px 18px rgba(0, 0, 0, 0.22);
   }
   .item:active .tile {
     transform: scale(0.94);

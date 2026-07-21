@@ -61,7 +61,7 @@
     border-radius: 11px;
     border: 2px solid var(--ink);
     background: var(--card);
-    box-shadow: 0 3px 0 rgba(74, 55, 40, 0.2);
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
     font-size: 1.05rem;
     cursor: pointer;
     transition: background 0.15s ease, transform 0.2s ease;
@@ -82,7 +82,7 @@
     display: grid;
     place-items: center;
     padding: 20px;
-    background: rgba(74, 55, 40, 0.4);
+    background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(3px);
   }
   .modal {
@@ -90,7 +90,7 @@
     border-radius: 20px;
     border: 3px solid var(--ink);
     background: var(--panel);
-    box-shadow: 0 6px 0 rgba(74, 55, 40, 0.25), 0 24px 50px rgba(74, 55, 40, 0.4);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25), 0 24px 50px rgba(0, 0, 0, 0.4);
     overflow: hidden;
   }
   header {
@@ -113,7 +113,7 @@
     border-radius: 9px;
     border: 2px solid var(--ink);
     background: var(--card);
-    color: var(--text);
+    color: var(--ink);
     font-size: 0.9rem;
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease;
@@ -146,7 +146,7 @@
     border-radius: 12px;
     border: 2px solid var(--ink);
     background: var(--card);
-    color: var(--text);
+    color: var(--ink);
     font: inherit;
     cursor: pointer;
     transition: background 0.15s ease, box-shadow 0.15s ease, color 0.15s ease, transform 0.1s ease;
@@ -155,7 +155,7 @@
     font-size: 1.1rem;
     line-height: 1;
     letter-spacing: -0.12em;
-    color: var(--text);
+    color: var(--ink);
   }
   .sp .lb {
     font-size: 0.75rem;
@@ -164,7 +164,7 @@
     transform: scale(0.95);
   }
   .sp.active {
-    color: var(--text);
+    color: var(--ink);
     background: var(--accent);
     box-shadow: inset 0 0 0 2px var(--ink);
   }

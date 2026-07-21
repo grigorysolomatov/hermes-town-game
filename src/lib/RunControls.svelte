@@ -35,8 +35,8 @@
     letter-spacing: 0.01em;
     color: #fff;
     background: var(--go);
-    box-shadow: 0 4px 0 var(--ink), 0 7px 12px rgba(74, 55, 40, 0.25);
-    text-shadow: 0 1px 1px rgba(74, 55, 40, 0.35);
+    box-shadow: 0 4px 0 var(--ink), 0 7px 12px rgba(0, 0, 0, 0.25);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
     cursor: pointer;
     transition: transform 0.08s ease, box-shadow 0.12s ease, filter 0.15s ease;
   }
@@ -45,7 +45,7 @@
   }
   .start:active:not(:disabled) {
     transform: translateY(3px);
-    box-shadow: 0 1px 0 var(--ink), 0 2px 6px rgba(74, 55, 40, 0.25);
+    box-shadow: 0 1px 0 var(--ink), 0 2px 6px rgba(0, 0, 0, 0.25);
   }
   .start:disabled {
     cursor: default;

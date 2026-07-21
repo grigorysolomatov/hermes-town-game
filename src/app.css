@@ -1,17 +1,19 @@
 :root {
-  color-scheme: light;
-  /* Warm, light "cozy board game" palette to match the flat cartoon icons. */
-  --page-bg: #c9b088;
-  --stage-1: #fdf6ea;
-  --stage-2: #f5e7cd;
-  --board: #ead4ac;   /* grid backing */
-  --slot: #f6ecd6;    /* empty cell */
-  --card: #fffcf5;    /* tile / chip card */
-  --panel: #f8ecd6;   /* bottom panel, modals */
-  --text: #4a3728;    /* dark brown ink */
-  --muted: #9c8163;
-  --ink: #4a3728;     /* outlines */
-  --line: rgba(74, 55, 40, 0.16);
+  color-scheme: dark;
+  /* Dark, cozy "board game" palette. Tiles stay light (sticker cards) so the
+     flat cartoon icons pop against the dark board. */
+  --page-bg: #17120d;
+  --stage-1: #2b2219;
+  --stage-2: #201811;
+  --board: #33291f;   /* raised grid backing (lighter than bg) */
+  --slot: #221a13;    /* recessed empty cell (darker) */
+  --card: #fffcf5;    /* tile / sticker card — stays light */
+  --panel: #241d16;   /* bottom panel, modals */
+  --chip: #35291f;    /* buttons / chips on dark */
+  --text: #f4ead9;    /* warm cream text */
+  --muted: #b7a184;
+  --ink: #0e0b08;     /* near-black chunky outlines */
+  --line: rgba(255, 255, 255, 0.1);
   --accent: #f2a43c;  /* warm highlight */
   --go: #58b368;      /* primary action */
   --good: #4fae5a;
@@ -31,7 +33,7 @@ body {
 }
 
 body {
-  background: radial-gradient(1200px 800px at 50% -10%, #e0caa1, var(--page-bg));
+  background: radial-gradient(1200px 800px at 50% -10%, #2a1f15, var(--page-bg));
   color: var(--text);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   overflow: hidden;
@@ -72,6 +74,6 @@ body {
     height: min(100dvh, 900px);
     border-radius: 26px;
     border: 3px solid var(--ink);
-    box-shadow: 0 24px 60px rgba(74, 55, 40, 0.4);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
   }
 }

@@ -124,8 +124,8 @@
     border-radius: 22px;
     border: 3px solid var(--ink);
     background: var(--board);
-    box-shadow: inset 0 2px 8px rgba(74, 55, 40, 0.18),
-      0 6px 0 rgba(74, 55, 40, 0.12), 0 14px 26px rgba(74, 55, 40, 0.2);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.18),
+      0 6px 0 rgba(0, 0, 0, 0.12), 0 14px 26px rgba(0, 0, 0, 0.2);
     touch-action: none;
   }
 
@@ -137,7 +137,7 @@
     inset: 5px;
     border-radius: 13px;
     background: var(--slot);
-    box-shadow: inset 0 0 0 2px rgba(74, 55, 40, 0.1);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45);
     transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
   }
   .cell.target .slot {
@@ -182,7 +182,7 @@
     touch-action: none;
     background: var(--card);
     box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--tint) 55%, var(--card)),
-      0 3px 0 rgba(74, 55, 40, 0.2), 0 5px 10px rgba(74, 55, 40, 0.16);
+      0 3px 0 rgba(0, 0, 0, 0.2), 0 5px 10px rgba(0, 0, 0, 0.16);
     transition: box-shadow 0.15s ease, transform 0.12s ease, filter 0.3s ease,
       opacity 0.3s ease;
   }
@@ -247,7 +247,7 @@
     font-size: 32cqmin;
     font-weight: 900;
     -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.9);
-    text-shadow: 0 2px 4px rgba(74, 55, 40, 0.35);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
   }
   .plus.gain {
     color: #2f9e4e;
