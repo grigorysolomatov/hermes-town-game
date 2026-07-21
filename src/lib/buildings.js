@@ -17,7 +17,7 @@ import batteryImg from './assets/res-battery.png';
 //   produces    resource key this building outputs when triggered, or null
 //   special     a non-production effect the worker applies (see worker.svelte.js):
 //                 'energy' coffee — restores worker energy
-//                 'lift'   spring — sends the worker up a row
+//                 'lift'   piston — sends the worker up a row
 //                 'trade'  trade post — sells adjacent goods for coins
 //   startStored initial (and per-turn recharge) charge count for `special` tiles
 //   sellable    whether a trade post may sell this tile's stored (producers implied)

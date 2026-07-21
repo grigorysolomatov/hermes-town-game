@@ -38,7 +38,7 @@ export function startRun() {
   worker.turn += 1;
   worker.energy = START_ENERGY;
 
-  // Recharge charge tiles (coffee, spring) at the start of each turn. Only tiles
+  // Recharge charge tiles (coffee, piston) at the start of each turn. Only tiles
   // with a defined startStored reset; producers and trade posts keep their stock.
   for (const cell of game.grid) {
     if (cell && BUILDINGS[cell.type].startStored != null) {
@@ -116,7 +116,7 @@ function endRun() {
 }
 
 // Whether a trade post may sell this building type's stored goods. Producers are
-// sellable by default; `sellable` overrides (coffee opts in, spring stays out).
+// sellable by default; `sellable` overrides (coffee opts in, piston stays out).
 function isSellable(type) {
   const def = BUILDINGS[type];
   return def.sellable ?? (!!def.produces && !def.special);
