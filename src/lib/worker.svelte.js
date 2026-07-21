@@ -65,7 +65,7 @@ export function startRun() {
           flash(b.uid, -1);
         }
       } else if (def.special === 'lift') {
-        // Spring: spends one charge (and 1 energy) to send the worker up a row,
+        // Piston: spends one charge (and 1 energy) to send the worker up a row,
         // re-sweeping the producers below. Inert at 0 charges, so runs stay finite.
         if ((b.stored ?? 0) > 0 && worker.energy > 0) {
           b.stored -= 1;
