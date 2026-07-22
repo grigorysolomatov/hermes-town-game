@@ -29,6 +29,25 @@
   // Sign a floating label: '+n' or '−n'.
   const signed = (d) => (d > 0 ? '+' : '−') + Math.abs(d);
 
+  // Replay a small scale pop when `value` changes, without remounting the node.
+  function pop(node, value) {
+    let prev = value;
+    return {
+      update(next) {
+        if (next === prev) return;
+        prev = next;
+        node.animate(
+          [
+            { transform: 'translateX(-50%) scale(1)' },
+            { transform: 'translateX(-50%) scale(1.18)' },
+            { transform: 'translateX(-50%) scale(1)' },
+          ],
+          { duration: 300, easing: 'ease' }
+        );
+      },
+    };
+  }
+
   // Buildings as a keyed list (by uid) positioned over the grid via their cell
   // index. Keeping identity stable lets animate:flip glide them between cells.
   let placed = $derived(
@@ -110,11 +129,9 @@
       out:scale={{ duration: 180 }}
     >
       <div class="worker-inner"><img class="worker-img" src={workerImg} alt="" draggable="false" /></div>
-      {#key worker.energy}
-        <div class="energy" class:low={worker.energy <= 0}>
-          <img class="energy-icon" src={batteryImg} alt="" draggable="false" />{worker.energy}
-        </div>
-      {/key}
+      <div class="energy" class:low={worker.energy <= 0} use:pop={worker.energy}>
+        <img class="ricon-img" src={batteryImg} alt="" draggable="false" />{worker.energy}
+      </div>
     </div>
   {/if}
 </div>
@@ -203,29 +220,34 @@
     opacity: 0.5;
   }
 
-  /* Stored-resource count, kept on the producing tile itself. */
-  .badge {
+  /* Shared count pills: the tile resource badge and the worker energy badge. */
+  .badge,
+  .energy {
     position: absolute;
     left: 50%;
-    bottom: 4%;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
-    gap: 0.12em;
-    padding: 0.1em 0.42em 0.1em 0.28em;
     border-radius: 999px;
-    font-size: 26cqmin;
     font-weight: 800;
     line-height: 1;
-    color: #0f0d1c;
     font-variant-numeric: tabular-nums;
+  }
+
+  /* Stored-resource count, kept on the producing tile itself. */
+  .badge {
+    bottom: 4%;
+    gap: 0.12em;
+    padding: 0.1em 0.42em 0.1em 0.28em;
+    font-size: 26cqmin;
+    color: #0f0d1c;
     background: color-mix(in srgb, var(--rtint) 88%, white 12%);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
-  .badge .ricon {
+  .ricon {
     font-size: 0.78em;
   }
-  .badge .ricon-img {
+  .ricon-img {
     width: 1.05em;
     height: 1.05em;
     object-fit: contain;
@@ -319,45 +341,18 @@
 
   /* The worker's current energy, shown as a battery badge above its head. */
   .energy {
-    position: absolute;
     top: -14%;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
     gap: 0.05em;
     padding: 0.06em 0.42em 0.06em 0.22em;
-    border-radius: 999px;
     font-size: 23cqmin;
-    font-weight: 800;
-    line-height: 1;
     color: #1c3a20;
-    font-variant-numeric: tabular-nums;
     background: color-mix(in srgb, #b7e6bd 90%, white);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5);
     z-index: 5;
-    animation: energyPop 0.3s ease;
   }
   .energy.low {
     background: color-mix(in srgb, #f0a99a 92%, white);
     color: #4a1c14;
-  }
-  .energy-icon {
-    width: 1.05em;
-    height: 1.05em;
-    object-fit: contain;
-    margin: -0.15em 0;
-  }
-  @keyframes energyPop {
-    0% {
-      transform: translateX(-50%) scale(1);
-    }
-    45% {
-      transform: translateX(-50%) scale(1.18);
-    }
-    100% {
-      transform: translateX(-50%) scale(1);
-    }
   }
   .worker-inner {
     position: absolute;
